@@ -1,0 +1,13 @@
+# YOLOv8がデータセットの構造を理解するための設定ファイル
+
+# 学習、検証、テスト用画像データへのパス
+# 注意: このパスは、前のスクリプトで生成したフォルダ構成に合わせてください。
+train: /content/drive/MyDrive/synthetic_data_multi/images/train
+val: /content/drive/MyDrive/synthetic_data_multi/images/valid
+test: /content/drive/MyDrive/synthetic_data_multi/images/test
+
+# クラスの数
+nc: 6
+
+# クラス名 (順番が重要です)
+names: ['PET', 'can', 'paper', 'bag', 'cigarette', 'OTHER']
