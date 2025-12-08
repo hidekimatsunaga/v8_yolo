@@ -1,0 +1,62 @@
+[0.000000] (-) TimerEvent: {}
+[0.000400] (-) JobUnselected: {'identifier': 'camera_calibration_parsers'}
+[0.000469] (-) JobUnselected: {'identifier': 'camera_info_manager'}
+[0.000493] (-) JobUnselected: {'identifier': 'camera_info_manager_py'}
+[0.000510] (-) JobUnselected: {'identifier': 'image_common'}
+[0.000526] (-) JobUnselected: {'identifier': 'image_transport'}
+[0.000546] (yolov8_ros) JobQueued: {'identifier': 'yolov8_ros', 'dependencies': OrderedDict()}
+[0.000565] (yolov8_ros) JobStarted: {'identifier': 'yolov8_ros'}
+[0.099624] (-) TimerEvent: {}
+[0.199958] (-) TimerEvent: {}
+[0.228228] (yolov8_ros) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../build/yolov8_ros', 'build', '--build-base', '/home/matsunaga-h/yolov8/build/yolov8_ros/build', 'install', '--record', '/home/matsunaga-h/yolov8/build/yolov8_ros/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/matsunaga-h/yolov8/yolo_ws/src/yolov8_ros', 'env': {'USER_ID': '1000', 'HOSTNAME': 'rabbit2', 'SHLVL': '1', 'HOME': '/root', 'OPENCV_VIDEOIO_PRIORITY_V4L2': '1000', 'HOST_USER': 'matsunaga-h', 'GROUP_ID': '1000', '_': '/usr/bin/colcon', 'TERM': 'xterm', 'QT_X11_NO_MITSHM': '1', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':0', 'LANG': 'C.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'XAUTHORITY': '/tmp/.docker.xauth', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'DEBIAN_FRONTEND': 'noninteractive', 'PWD': '/home/matsunaga-h/yolov8/build/yolov8_ros', 'TZ': 'Asia/Tokyo', 'COLCON': '1', 'OPENCV_VIDEOIO_PRIORITY_GSTREAMER': '0', 'PYTHONPATH': '/home/matsunaga-h/yolov8/build/yolov8_ros/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages:'}, 'shell': False}
+[0.300141] (-) TimerEvent: {}
+[0.313219] (yolov8_ros) StdoutLine: {'line': b'running egg_info\n'}
+[0.313594] (yolov8_ros) StdoutLine: {'line': b'creating ../../../build/yolov8_ros/yolov8_ros.egg-info\n'}
+[0.313783] (yolov8_ros) StdoutLine: {'line': b'writing ../../../build/yolov8_ros/yolov8_ros.egg-info/PKG-INFO\n'}
+[0.313911] (yolov8_ros) StdoutLine: {'line': b'writing dependency_links to ../../../build/yolov8_ros/yolov8_ros.egg-info/dependency_links.txt\n'}
+[0.313961] (yolov8_ros) StdoutLine: {'line': b'writing entry points to ../../../build/yolov8_ros/yolov8_ros.egg-info/entry_points.txt\n'}
+[0.313999] (yolov8_ros) StdoutLine: {'line': b'writing requirements to ../../../build/yolov8_ros/yolov8_ros.egg-info/requires.txt\n'}
+[0.314042] (yolov8_ros) StdoutLine: {'line': b'writing top-level names to ../../../build/yolov8_ros/yolov8_ros.egg-info/top_level.txt\n'}
+[0.314080] (yolov8_ros) StdoutLine: {'line': b"writing manifest file '../../../build/yolov8_ros/yolov8_ros.egg-info/SOURCES.txt'\n"}
+[0.314670] (yolov8_ros) StdoutLine: {'line': b"reading manifest file '../../../build/yolov8_ros/yolov8_ros.egg-info/SOURCES.txt'\n"}
+[0.315010] (yolov8_ros) StdoutLine: {'line': b"writing manifest file '../../../build/yolov8_ros/yolov8_ros.egg-info/SOURCES.txt'\n"}
+[0.315084] (yolov8_ros) StdoutLine: {'line': b'running build\n'}
+[0.315117] (yolov8_ros) StdoutLine: {'line': b'running build_py\n'}
+[0.315176] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/build/yolov8_ros/build\n'}
+[0.315208] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib\n'}
+[0.315237] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315288] (yolov8_ros) StdoutLine: {'line': b'copying yolov8_ros/yolo_node.py -> /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315317] (yolov8_ros) StdoutLine: {'line': b'copying yolov8_ros/test_yolo_node.py -> /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315342] (yolov8_ros) StdoutLine: {'line': b'copying yolov8_ros/object_detection_node.py -> /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315367] (yolov8_ros) StdoutLine: {'line': b'copying yolov8_ros/yolo_3d_node.py -> /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315391] (yolov8_ros) StdoutLine: {'line': b'copying yolov8_ros/__init__.py -> /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros\n'}
+[0.315414] (yolov8_ros) StdoutLine: {'line': b'running install\n'}
+[0.315477] (yolov8_ros) StdoutLine: {'line': b'running install_lib\n'}
+[0.315917] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.315947] (yolov8_ros) StdoutLine: {'line': b'copying /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros/yolo_node.py -> /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.315987] (yolov8_ros) StdoutLine: {'line': b'copying /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros/test_yolo_node.py -> /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.316040] (yolov8_ros) StdoutLine: {'line': b'copying /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros/object_detection_node.py -> /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.316067] (yolov8_ros) StdoutLine: {'line': b'copying /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros/yolo_3d_node.py -> /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.316091] (yolov8_ros) StdoutLine: {'line': b'copying /home/matsunaga-h/yolov8/build/yolov8_ros/build/lib/yolov8_ros/__init__.py -> /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros\n'}
+[0.316285] (yolov8_ros) StdoutLine: {'line': b'byte-compiling /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros/yolo_node.py to yolo_node.cpython-310.pyc\n'}
+[0.317057] (yolov8_ros) StdoutLine: {'line': b'byte-compiling /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros/test_yolo_node.py to test_yolo_node.cpython-310.pyc\n'}
+[0.318129] (yolov8_ros) StdoutLine: {'line': b'byte-compiling /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros/object_detection_node.py to object_detection_node.cpython-310.pyc\n'}
+[0.319025] (yolov8_ros) StdoutLine: {'line': b'byte-compiling /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros/yolo_3d_node.py to yolo_3d_node.cpython-310.pyc\n'}
+[0.320038] (yolov8_ros) StdoutLine: {'line': b'byte-compiling /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros/__init__.py to __init__.cpython-310.pyc\n'}
+[0.320079] (yolov8_ros) StdoutLine: {'line': b'running install_data\n'}
+[0.320126] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/install/yolov8_ros/share/ament_index\n'}
+[0.320154] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/install/yolov8_ros/share/ament_index/resource_index\n'}
+[0.320182] (yolov8_ros) StdoutLine: {'line': b'creating /home/matsunaga-h/yolov8/install/yolov8_ros/share/ament_index/resource_index/packages\n'}
+[0.320221] (yolov8_ros) StdoutLine: {'line': b'copying resource/yolov8_ros -> /home/matsunaga-h/yolov8/install/yolov8_ros/share/ament_index/resource_index/packages\n'}
+[0.320268] (yolov8_ros) StdoutLine: {'line': b'copying package.xml -> /home/matsunaga-h/yolov8/install/yolov8_ros/share/yolov8_ros\n'}
+[0.320296] (yolov8_ros) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.321393] (yolov8_ros) StdoutLine: {'line': b'Copying ../../../build/yolov8_ros/yolov8_ros.egg-info to /home/matsunaga-h/yolov8/install/yolov8_ros/lib/python3.10/site-packages/yolov8_ros-0.0.0-py3.10.egg-info\n'}
+[0.321724] (yolov8_ros) StdoutLine: {'line': b'running install_scripts\n'}
+[0.334523] (yolov8_ros) StdoutLine: {'line': b'Installing object_detection_node script to /home/matsunaga-h/yolov8/install/yolov8_ros/lib/yolov8_ros\n'}
+[0.334640] (yolov8_ros) StdoutLine: {'line': b'Installing test_yolo_node script to /home/matsunaga-h/yolov8/install/yolov8_ros/lib/yolov8_ros\n'}
+[0.334670] (yolov8_ros) StdoutLine: {'line': b'Installing yolo_3d_node script to /home/matsunaga-h/yolov8/install/yolov8_ros/lib/yolov8_ros\n'}
+[0.334859] (yolov8_ros) StdoutLine: {'line': b'Installing yolo_node script to /home/matsunaga-h/yolov8/install/yolov8_ros/lib/yolov8_ros\n'}
+[0.334896] (yolov8_ros) StdoutLine: {'line': b"writing list of installed files to '/home/matsunaga-h/yolov8/build/yolov8_ros/install.log'\n"}
+[0.347284] (yolov8_ros) CommandEnded: {'returncode': 0}
+[0.364334] (yolov8_ros) JobEnded: {'identifier': 'yolov8_ros', 'rc': 0}
+[0.364751] (-) EventReactorShutdown: {}

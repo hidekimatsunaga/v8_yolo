@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: yolov8-ros
+Version: 0.0.0
+Summary: YOLOv8 ROS2 wrapper
+Home-page: UNKNOWN
+Maintainer: matsunaga-h
+Maintainer-email: your_email@example.com
+License: MIT
+Platform: UNKNOWN
+Provides-Extra: test
+
+UNKNOWN
+
