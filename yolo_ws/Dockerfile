@@ -99,7 +99,8 @@ RUN . /opt/ros/humble/setup.sh && \
 # .bashrc に環境設定を追記し、コンテナ起動時に自動で読み込むようにする
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
     echo "source /root/yolo_ws/install/setup.bash" >> ~/.bashrc && \
-    echo "export PYTHONPATH=/opt/librealsense/build/wrappers/python:\$PYTHONPATH" >> ~/.bashrc
+    echo "export PYTHONPATH=/opt/librealsense/build/wrappers/python:\$PYTHONPATH" >> ~/.bashrc && \
+    echo "alias yolo_run='ros2 run yolov8_ros yolo_3d_node --ros-args -p screen_width:=1920 -p screen_height:=1080'" >> ~/.bashrc
 
 # 不要なキャッシュを削除
 RUN rm -rf ~/.cache/pip

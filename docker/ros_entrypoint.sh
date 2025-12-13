@@ -27,6 +27,20 @@ if [ -n "${HOST_USER:-}" ] && [ -n "${USER_ID:-}" ] && [ -n "${GROUP_ID:-}" ]; t
     echo 'source /opt/ros/humble/setup.bash' >> "${USER_HOME}/.bashrc"
   fi
 
+  # エイリアスを追加（例）
+  if ! grep -q "# Custom aliases" "${USER_HOME}/.bashrc" 2>/dev/null; then
+    cat >> "${USER_HOME}/.bashrc" << 'EOF'
+
+# Custom aliases
+alias ll='ls -alFh'
+alias cb='colcon build'
+alias cbs='colcon build --symlink-install'
+alias cbp='colcon build --packages-select'
+alias ros2run='ros2 run'
+alias yolo='python3 ~/home/matsunaga-h/yolov8/yolo_ws/src/yolov8_ros/yolov8_ros/yolo_3d_node.py'
+EOF
+  fi
+
   # 目的ディレクトリを必ず用意
   mkdir -p "${USER_HOME}/yolov8"
   chown -R "${USER_ID}:${GROUP_ID}" "${USER_HOME}"
