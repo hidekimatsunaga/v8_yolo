@@ -37,7 +37,7 @@ alias cb='colcon build'
 alias cbs='colcon build --symlink-install'
 alias cbp='colcon build --packages-select'
 alias ros2run='ros2 run'
-alias yolo='python3 ~/home/matsunaga-h/yolov8/yolo_ws/src/yolov8_ros/yolov8_ros/yolo_3d_node.py'
+alias yolo='ros2 run yolov8_ros yolo_3d_node --ros-args -p screen_width:=1920 -p screen_height:=1080'
 EOF
   fi
 
