@@ -196,7 +196,8 @@ class YoloNode(Node):
                     x1, y1, x2, y2 = map(int, box.xyxy[0])
                     center_x = int((x1 + x2) / 2)
                     center_y = int((y1 + y2) / 2)
-                    current_detections.append({'center': (center_x, center_y), 'box_data': box})
+                    confidence = float(box.conf[0])
+                    current_detections.append({'center': (center_x, center_y), 'box_data': box, 'confidence': confidence})
 
         matched_cols_to_ids = {}
 
@@ -205,7 +206,7 @@ class YoloNode(Node):
             for det in current_detections:
                 self.tracked_objects[self.next_object_id] = {
                     'center': det['center'], 'count': 1, 'inactive': 0,
-                    'locked': False, 'locked_point': None
+                    'locked': False, 'locked_point': None, 'confidence': det['confidence']
                 }
                 self.next_object_id += 1
         else:
@@ -234,6 +235,7 @@ class YoloNode(Node):
 
                     self.tracked_objects[object_id]['count'] += 1
                     self.tracked_objects[object_id]['inactive'] = 0
+                    self.tracked_objects[object_id]['confidence'] = current_detections[col]['confidence']
                     matched_cols_to_ids[col] = object_id
                     used_rows.add(row)
                     used_cols.add(col)
@@ -248,7 +250,7 @@ class YoloNode(Node):
                 for col in unmatched_cols:
                     self.tracked_objects[self.next_object_id] = {
                         'center': current_centers[col], 'count': 1, 'inactive': 0,
-                        'locked': False, 'locked_point': None
+                        'locked': False, 'locked_point': None, 'confidence': current_detections[col]['confidence']
                     }
                     self.next_object_id += 1
             else:
@@ -303,10 +305,15 @@ class YoloNode(Node):
             cv2.putText(cv_image, label, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-        for oid, data in self.tracked_objects.items():
-            if data['locked'] and data['locked_point'] is not None:
-                data['locked_point'].header.stamp = self.get_clock().now().to_msg()
-                self.pub_depth.publish(data['locked_point'])
+        # ロックされた物体の中で信頼度が最も高い物体を1つだけパブリッシュ（同じならID最小）
+        locked_objects = [(oid, data) for oid, data in self.tracked_objects.items()
+                          if data['locked'] and data['locked_point'] is not None]
+        
+        if locked_objects:
+            # 信頼度が最も高く、同じならID最小（最初にロック）の物体を選択
+            best_oid, best_data = max(locked_objects, key=lambda x: (x[1]['confidence'], -x[0]))
+            best_data['locked_point'].header.stamp = self.get_clock().now().to_msg()
+            self.pub_depth.publish(best_data['locked_point'])
 
         # ===== 表示 & キー入力 =====
         try:
