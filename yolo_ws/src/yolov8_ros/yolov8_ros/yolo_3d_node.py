@@ -199,6 +199,21 @@ class YoloNode(Node):
                     confidence = float(box.conf[0])
                     current_detections.append({'center': (center_x, center_y), 'box_data': box, 'confidence': confidence})
 
+        # Detection summary for visibility when on-screen text is not enough
+        if current_detections:
+            det_logs = []
+            for det in current_detections:
+                b = det['box_data']
+                x1, y1, x2, y2 = map(int, b.xyxy[0])
+                class_id = int(b.cls[0]) if b.cls is not None else -1
+                class_name = self.model.names[class_id] if class_id in self.model.names else str(class_id)
+                det_logs.append(
+                    f"{class_name} conf={det['confidence']:.2f} xyxy=({x1},{y1},{x2},{y2}) center={det['center']}"
+                )
+            self.get_logger().info(f"Detections: {len(current_detections)} | " + " ; ".join(det_logs))
+        else:
+            self.get_logger().info("Detections: 0")
+
         matched_cols_to_ids = {}
 
         # ===== 追跡ロジック（ここは元のまま）=====
