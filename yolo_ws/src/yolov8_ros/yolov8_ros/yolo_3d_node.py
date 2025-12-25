@@ -59,7 +59,9 @@ class YoloNode(Node):
         self.next_object_id = 0
         self.CONSECUTIVE_THRESHOLD = self.declare_parameter("consecutive_threshold", 10).value
         self.MAX_INACTIVE_FRAMES = self.declare_parameter("max_inactive_frames", 100).value
-        self.DEPTH_PATCH_SIZE = self.declare_parameter("depth_patch_size", 5).value
+        self.DEPTH_PATCH_SIZE = self.declare_parameter("depth_patch_size", 7).value
+        self.visualize_depth_patch = self.declare_parameter("visualize_depth_patch", True).value
+        self.show_depth_text = self.declare_parameter("show_depth_text", True).value
 
         # キー入力のデバウンス用（連打防止）
         self.last_key = -1
@@ -293,6 +295,58 @@ class YoloNode(Node):
             class_name = self.model.names[class_id]
             confidence = float(box.conf[0])
 
+            # Always visualize the sampling patch and center point if enabled
+            if self.visualize_depth_patch:
+                patch_size = int(self.DEPTH_PATCH_SIZE) if hasattr(self, 'DEPTH_PATCH_SIZE') else 5
+                half = max(1, patch_size // 2)
+                # Use depth image size if available, otherwise color image size
+                img_h = (self.latest_depth_image.shape[0] if self.latest_depth_image is not None else cv_image.shape[0])
+                img_w = (self.latest_depth_image.shape[1] if self.latest_depth_image is not None else cv_image.shape[1])
+                y_min = max(0, center_y - half)
+                y_max = min(img_h - 1, center_y + half)
+                x_min = max(0, center_x - half)
+                x_max = min(img_w - 1, center_x + half)
+                try:
+                    # Magenta, thicker for visibility
+                    cv2.rectangle(cv_image, (x_min, y_min), (x_max, y_max), (255, 0, 255), 2)
+                    cv2.circle(cv_image, (center_x, center_y), 3, (255, 0, 255), -1)
+                    # Small crosshair
+                    cv2.line(cv_image, (center_x - 8, center_y), (center_x + 8, center_y), (255, 0, 255), 1)
+                    cv2.line(cv_image, (center_x, center_y - 8), (center_x, center_y + 8), (255, 0, 255), 1)
+
+                    # Draw 5x5 grid lines exactly over the patch area if depth is available
+                    if self.latest_depth_image is not None:
+                        for i in range(patch_size + 1):
+                            xi = x_min + i
+                            yi = y_min + i
+                            # vertical lines
+                            if x_min <= xi <= x_max:
+                                cv2.line(cv_image, (xi, y_min), (xi, y_max), (255, 0, 255), 1)
+                            # horizontal lines
+                            if y_min <= yi <= y_max:
+                                cv2.line(cv_image, (x_min, yi), (x_max, yi), (255, 0, 255), 1)
+
+                        # Compute median and center depth every frame and annotate
+                        if self.show_depth_text:
+                            y_end = min(self.latest_depth_image.shape[0], y_max + 1)
+                            x_end = min(self.latest_depth_image.shape[1], x_max + 1)
+                            patch = self.latest_depth_image[y_min:y_end, x_min:x_end]
+                            valid = patch[patch > 0]
+                            z_med = float(np.median(valid)) * 0.001 if valid.size else 0.0
+                            center_in_bounds = (0 <= center_y < self.latest_depth_image.shape[0] and 0 <= center_x < self.latest_depth_image.shape[1])
+                            center_raw = self.latest_depth_image[center_y, center_x] if center_in_bounds else 0
+                            z_ctr = (float(center_raw) * 0.001) if center_raw > 0 else 0.0
+
+                            text = f"Z_med={z_med:.2f}m" if z_med > 0 else "Z_med=--"
+                            if z_ctr > 0:
+                                text += f" | Z_ctr={z_ctr:.2f}m"
+                            tx = x_min-250
+                            ty = max(0, y_min - 8)
+                            cv2.putText(cv_image, text, (tx, ty), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+                            # cv2.putText(cv_image, text, (tx, ty), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
+                except Exception:
+                    pass
+
             if obj_data['count'] >= self.CONSECUTIVE_THRESHOLD and not obj_data['locked']:
                 if self.latest_depth_image is not None and self.fx is not None:
                     if 0 <= center_y < self.latest_depth_image.shape[0] and 0 <= center_x < self.latest_depth_image.shape[1]:
@@ -302,6 +356,8 @@ class YoloNode(Node):
                         y_max = min(self.latest_depth_image.shape[0], center_y + patch_size // 2 + 1)
                         x_min = max(0, center_x - patch_size // 2)
                         x_max = min(self.latest_depth_image.shape[1], center_x + patch_size // 2 + 1)
+
+                        # Visualization moved earlier to always draw; keep compute-only below
 
                         patch = self.latest_depth_image[y_min:y_max, x_min:x_max]
                         valid_depths = patch[patch > 0]
