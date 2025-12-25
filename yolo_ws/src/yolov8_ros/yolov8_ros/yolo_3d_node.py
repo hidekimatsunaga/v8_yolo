@@ -57,8 +57,9 @@ class YoloNode(Node):
         # 追跡用
         self.tracked_objects = {}
         self.next_object_id = 0
-        self.CONSECUTIVE_THRESHOLD = 10
-        self.MAX_INACTIVE_FRAMES = 100
+        self.CONSECUTIVE_THRESHOLD = self.declare_parameter("consecutive_threshold", 10).value
+        self.MAX_INACTIVE_FRAMES = self.declare_parameter("max_inactive_frames", 100).value
+        self.DEPTH_PATCH_SIZE = self.declare_parameter("depth_patch_size", 5).value
 
         # キー入力のデバウンス用（連打防止）
         self.last_key = -1
@@ -295,7 +296,20 @@ class YoloNode(Node):
             if obj_data['count'] >= self.CONSECUTIVE_THRESHOLD and not obj_data['locked']:
                 if self.latest_depth_image is not None and self.fx is not None:
                     if 0 <= center_y < self.latest_depth_image.shape[0] and 0 <= center_x < self.latest_depth_image.shape[1]:
-                        z = self.latest_depth_image[center_y, center_x] * 0.001
+                        # 中心座標周辺のパッチから中央値を取得
+                        patch_size = self.DEPTH_PATCH_SIZE
+                        y_min = max(0, center_y - patch_size // 2)
+                        y_max = min(self.latest_depth_image.shape[0], center_y + patch_size // 2 + 1)
+                        x_min = max(0, center_x - patch_size // 2)
+                        x_max = min(self.latest_depth_image.shape[1], center_x + patch_size // 2 + 1)
+
+                        patch = self.latest_depth_image[y_min:y_max, x_min:x_max]
+                        valid_depths = patch[patch > 0]
+                        if len(valid_depths) > 0:
+                            z = np.median(valid_depths) * 0.001
+                        else:
+                            z = 0
+                        
                         if z > 0 and not np.isnan(z):
                             X = (center_x - self.cx) * z / self.fx
                             Y = (center_y - self.cy) * z / self.fy

@@ -27,6 +27,12 @@ if [ -n "${HOST_USER:-}" ] && [ -n "${USER_ID:-}" ] && [ -n "${GROUP_ID:-}" ]; t
     echo 'source /opt/ros/humble/setup.bash' >> "${USER_HOME}/.bashrc"
   fi
 
+  # ROS 2 の通信をローカルのみに制限（WiFi接続不要）
+  if ! grep -q "ROS_LOCALHOST_ONLY" "${USER_HOME}/.bashrc" 2>/dev/null; then
+    echo 'export ROS_LOCALHOST_ONLY=1' >> "${USER_HOME}/.bashrc"
+    echo 'export ROS_DOMAIN_ID=0' >> "${USER_HOME}/.bashrc"
+  fi
+
   # エイリアスを追加（例）
   if ! grep -q "# Custom aliases" "${USER_HOME}/.bashrc" 2>/dev/null; then
     cat >> "${USER_HOME}/.bashrc" << 'EOF'
