@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import torch
 from scipy.spatial import distance as dist
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, Float32MultiArray
 import subprocess
 import re
 
@@ -74,7 +74,10 @@ class YoloNode(Node):
         self.sub_info = self.create_subscription(
             CameraInfo, '/camera/camera/aligned_depth_to_color/camera_info', self.info_callback, 10)
         self.pub_depth = self.create_publisher(PointStamped, '/detected_depth_points', 10)
-
+        
+        self.pub_bb_locked = self.create_publisher(
+            Float32MultiArray, '/yolo/bb_locked', 10
+        )
         self.get_logger().info("YoloNode initialized.")
 
     def init_display_window(self):
@@ -399,7 +402,42 @@ class YoloNode(Node):
             best_oid, best_data = max(locked_objects, key=lambda x: (x[1]['confidence'], -x[0]))
             best_data['locked_point'].header.stamp = self.get_clock().now().to_msg()
             self.pub_depth.publish(best_data['locked_point'])
+          # ===== ロックされた1物体のBB情報をpublish =====
+            try:
+                # best_oid に対応する detection を探す
+                for col, det in enumerate(current_detections):
+                    if col not in matched_cols_to_ids:
+                        continue
+                    if matched_cols_to_ids[col] != best_oid:
+                        continue
 
+                    box = det['box_data']
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+
+                    cx = float((x1 + x2) / 2.0)
+                    cy = float((y1 + y2) / 2.0)
+                    bw = float(max(0, x2 - x1))
+                    bh = float(max(0, y2 - y1))
+                    area = float(bw * bh)
+
+                    class_id = int(box.cls[0]) if box.cls is not None else -1
+                    conf = float(det.get('confidence', 0.0))
+
+                    bb_msg = Float32MultiArray()
+                    bb_msg.data = [
+                        float(best_oid),
+                        float(class_id),
+                        float(conf),
+                        cx, cy,
+                        bw, bh,
+                        area
+                    ]
+
+                    self.pub_bb_locked.publish(bb_msg)
+                    break
+
+            except Exception as e:
+                self.get_logger().warn(f"Locked BB publish failed: {e}")
         # ===== 表示 & キー入力 =====
         try:
             h, w = cv_image.shape[:2]
