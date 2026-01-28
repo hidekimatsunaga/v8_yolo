@@ -29,6 +29,7 @@ setup(
             'yolo_node = yolov8_ros.yolo_node:main',
             'yolo_3d_node = yolov8_ros.yolo_3d_node:main',
             'object_detection_node = yolov8_ros.object_detection_node:main',
+            'yolo_video_save_node = yolov8_ros.yolo_video_save_node:main',
         ],
     },
 )
